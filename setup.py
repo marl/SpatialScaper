@@ -1,11 +1,15 @@
 from setuptools import setup
-import imp
+import importlib.util
 
 
 with open("README.md") as file:
     long_description = file.read()
 
-version = imp.load_source("spatialscaper.version", "spatialscaper/version.py")
+spec = importlib.util.spec_from_file_location(
+    "spatialscaper.version", "spatialscaper/version.py"
+)
+version = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(version)
 
 setup(
     name="spatialscaper",
